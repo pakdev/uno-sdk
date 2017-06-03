@@ -5,10 +5,10 @@ package uno.glm
 
 import glm.glm
 import glm.rad
-import glm.mat.Mat4
-import glm.vec._2.Vec2i
-import glm.vec._3.Vec3
-import glm.vec._4.Vec4
+import glm.mat4x4.Mat4
+import glm.vec2.Vec2i
+import glm.vec3.Vec3
+import glm.vec4.Vec4
 import java.util.*
 
 /**
@@ -40,7 +40,7 @@ class MatrixStack(
     internal val matrices = Stack<Mat4>()
     internal var currMat = mat
 
-    // Stack Maintanence Functions
+    // Stack Maintenance Functions
     // These functions maintain the matrix stack. You must take care not to underflow or overflow the stack
 
     /** Preserves the current matrix on the stack   */
@@ -58,7 +58,10 @@ class MatrixStack(
     /** Restores the current matrix to the value of the most recently preserved matrix.
      *  This function does not affect the depth of the matrix stack.    */
     fun reset(): MatrixStack {
-        matrices.last() put matrices[matrices.lastIndex - 1]
+        if (matrices.size != 1) {
+            matrices.last() put matrices[matrices.lastIndex - 1]
+            currMat = matrices.last()
+        }
         return this
     }
 
@@ -191,7 +194,7 @@ class MatrixStack(
      * @param zFar The farthest camera-space distance from the camera that can be seen. The projection will be clipped
      * against this value. It must be larger than zNear.     */
     fun perspective(degFOV: Float, aspectRatio: Float, zNear: Float, zFar: Float): MatrixStack {
-        currMat.times_(glm.perspective(degFOV, aspectRatio, zNear, zFar))
+        currMat.times_(glm.perspective(glm.radians(degFOV), aspectRatio, zNear, zFar))
         return this
     }
 
@@ -245,10 +248,17 @@ class MatrixStack(
         return this
     }
 
-    inline infix fun run(block: MatrixStack.() -> Any): MatrixStack {
+    inline infix fun apply(block: MatrixStack.() -> Unit): MatrixStack {
         push()
         block()
         pop()
         return this
+    }
+
+    inline infix fun <R> run(block: MatrixStack.() -> R): R {
+        push()
+        val result = block()
+        pop()
+        return result
     }
 }
