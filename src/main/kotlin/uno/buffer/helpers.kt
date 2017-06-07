@@ -1,7 +1,6 @@
 package uno.buffer
 
-import com.jogamp.opengl.util.GLBuffers
-import glm.BYTES
+import glm_.*
 import uno.kotlin.Quadruple
 import uno.kotlin.Quintuple
 import java.nio.*
@@ -11,70 +10,188 @@ import java.nio.*
  */
 
 
-fun FloatArray.toFloatBuffer(): FloatBuffer = GLBuffers.newDirectFloatBuffer(this)
+fun FloatArray.toFloatBuffer(): FloatBuffer {
+    val floatBuffer = floatBufferBig(size * Float.BYTES)
+    for (i in 0 until size)
+        floatBuffer.put(i, this[i])
+    return floatBuffer
+}
 
 fun FloatArray.toByteBuffer(): ByteBuffer {
-    val res = byteBufferBig(size * Float.BYTES)
-    forEachIndexed { i, float -> res.putFloat(i * Float.BYTES, float) }
-    return res
+    val byteBuffer = byteBufferBig(size * Float.BYTES)
+    for (i in 0 until size)
+        byteBuffer.putFloat(i * Float.BYTES, this[i])
+    return byteBuffer
 }
 
-fun DoubleArray.toDoubleBuffer(): DoubleBuffer = GLBuffers.newDirectDoubleBuffer(this)
+fun DoubleArray.toDoubleBuffer(): DoubleBuffer {
+    val doubleBuffer = doubleBufferBig(size * Double.BYTES)
+    for (i in 0 until size)
+        doubleBuffer.put(i, this[i])
+    return doubleBuffer
+}
+
 fun DoubleArray.toByteBuffer(): ByteBuffer {
-    val res = byteBufferBig(size * Double.BYTES)
-    forEachIndexed { i, double -> res.putDouble(i * Double.BYTES, double) }
-    return res
+    val byteBuffer = byteBufferBig(size * Double.BYTES)
+    for (i in 0 until size)
+        byteBuffer.putDouble(i * Double.BYTES, this[i])
+    return byteBuffer
 }
 
-fun ByteArray.toByteBuffer(): ByteBuffer = GLBuffers.newDirectByteBuffer(this)
+fun ByteArray.toByteBuffer(): ByteBuffer {
+    val byteBuffer = byteBufferBig(size)
+    for (i in 0 until size)
+        byteBuffer.put(i, this[i])
+    return byteBuffer
+}
 
-fun ShortArray.toShortBuffer(): ShortBuffer = GLBuffers.newDirectShortBuffer(this)
+
+fun ShortArray.toShortBuffer(): ShortBuffer {
+    val shortBuffer = shortBufferBig(size * Short.BYTES)
+    for (i in 0 until size)
+        shortBuffer.put(i, this[i])
+    return shortBuffer
+}
+
 fun ShortArray.toByteBuffer(): ByteBuffer {
-    val res = byteBufferBig(size * Short.BYTES)
-    forEachIndexed { i, short -> res.putShort(i * Short.BYTES, short) }
-    return res
+    val byteBuffer = byteBufferBig(size * Short.BYTES)
+    for (i in 0 until size)
+        byteBuffer.putShort(i * Short.BYTES, this[i])
+    return byteBuffer
 }
 
-fun IntArray.toIntBuffer(): IntBuffer = GLBuffers.newDirectIntBuffer(this)
+fun IntArray.toIntBuffer(): IntBuffer {
+    val intBuffer = intBufferBig(size * Int.BYTES)
+    for (i in 0 until size)
+        intBuffer.put(i, this[i])
+    return intBuffer
+}
+
 fun IntArray.toByteBuffer(): ByteBuffer {
-    val res = byteBufferBig(size * Int.BYTES)
-    forEachIndexed { i, int -> res.putInt(i * Int.BYTES, int) }
-    return res
+    val byteBuffer = byteBufferBig(size * Int.BYTES)
+    for (i in 0 until size)
+        byteBuffer.putInt(i * Int.BYTES, this[i])
+    return byteBuffer
 }
 
-fun LongArray.toLongBuffer(): LongBuffer = GLBuffers.newDirectLongBuffer(this)
+fun LongArray.toLongBuffer(): LongBuffer {
+    val longBuffer = longBufferBig(size * Long.BYTES)
+    for (i in 0 until size)
+        longBuffer.put(i, this[i])
+    return longBuffer
+}
+
 fun LongArray.toByteBuffer(): ByteBuffer {
-    val res = byteBufferBig(size * Long.BYTES)
-    forEachIndexed { i, long -> res.putLong(i * Long.BYTES, long) }
-    return res
+    val byteBuffer = byteBufferBig(size * Long.BYTES)
+    for (i in 0 until size)
+        byteBuffer.putLong(i * Long.BYTES, this[i])
+    return byteBuffer
 }
 
-fun floatBufferOf(vararg floats: Float): FloatBuffer = GLBuffers.newDirectFloatBuffer(floats)
-fun floatBufferOf(vararg elements: Number): FloatBuffer = GLBuffers.newDirectFloatBuffer(elements.map(Number::toFloat).toFloatArray())
 
-fun doubleBufferOf(vararg elements: Double): DoubleBuffer = GLBuffers.newDirectDoubleBuffer(elements)
-fun doubleBufferOf(vararg elements: Number): DoubleBuffer = GLBuffers.newDirectDoubleBuffer(elements.map(Number::toDouble).toDoubleArray())
+fun floatBufferOf(vararg floats: Float): FloatBuffer {
+    val count = floats.size
+    val floatBuffer = ByteBuffer.allocateDirect(count * Float.BYTES).order(ByteOrder.nativeOrder()).asFloatBuffer()
+    for (i in 0 until count)
+        floatBuffer.put(i, floats[i])
+    return floatBuffer
+}
 
-fun byteBufferOf(vararg elements: Byte): ByteBuffer = GLBuffers.newDirectByteBuffer(elements)
-fun byteBufferOf(vararg elements: Number): ByteBuffer = GLBuffers.newDirectByteBuffer(elements.map(Number::toByte).toByteArray())
+fun floatBufferOf(vararg elements: Number): FloatBuffer {
+    val count = elements.size
+    val floatBuffer = ByteBuffer.allocateDirect(count * Float.BYTES).order(ByteOrder.nativeOrder()).asFloatBuffer()
+    for (i in 0 until count)
+        floatBuffer.put(i, elements[i].f)
+    return floatBuffer
+}
 
-fun shortBufferOf(vararg elements: Short): ShortBuffer = GLBuffers.newDirectShortBuffer(elements)
-fun shortBufferOf(vararg elements: Number): ShortBuffer = GLBuffers.newDirectShortBuffer(elements.map(Number::toShort).toShortArray())
+fun doubleBufferOf(vararg doubles: Double): DoubleBuffer {
+    val count = doubles.size
+    val doubleBuffer = ByteBuffer.allocateDirect(count * Double.BYTES).order(ByteOrder.nativeOrder()).asDoubleBuffer()
+    for (i in 0 until count)
+        doubleBuffer.put(i, doubles[i])
+    return doubleBuffer
+}
 
-fun intBufferOf(vararg elements: Int): IntBuffer = GLBuffers.newDirectIntBuffer(elements)
-fun intBufferOf(vararg elements: Number): IntBuffer = GLBuffers.newDirectIntBuffer(elements.map(Number::toInt).toIntArray())
+fun doubleBufferOf(vararg elements: Number): DoubleBuffer {
+    val count = elements.size
+    val doubleBuffer = ByteBuffer.allocateDirect(count * Double.BYTES).order(ByteOrder.nativeOrder()).asDoubleBuffer()
+    for (i in 0 until count)
+        doubleBuffer.put(i, elements[i].d)
+    return doubleBuffer
+}
 
-fun longBufferOf(vararg elements: Long): LongBuffer = GLBuffers.newDirectLongBuffer(elements)
-fun longBufferOf(vararg elements: Number): LongBuffer = GLBuffers.newDirectLongBuffer(elements.map(Number::toLong).toLongArray())
+fun byteBufferOf(vararg bytes: Byte): ByteBuffer {
+    val count = bytes.size
+    val byteBuffer = ByteBuffer.allocateDirect(count * Byte.BYTES).order(ByteOrder.nativeOrder())
+    for (i in 0 until count)
+        byteBuffer.put(i, bytes[i])
+    return byteBuffer
+}
 
+fun byteBufferOf(vararg elements: Number): ByteBuffer {
+    val count = elements.size
+    val byteBuffer = ByteBuffer.allocateDirect(count * Byte.BYTES).order(ByteOrder.nativeOrder())
+    for (i in 0 until count)
+        byteBuffer.put(i, elements[i].b)
+    return byteBuffer
+}
 
-fun floatBufferBig(size: Int): FloatBuffer = GLBuffers.newDirectFloatBuffer(size)
-fun doubleBufferBig(size: Int): DoubleBuffer = GLBuffers.newDirectDoubleBuffer(size)
+fun shortBufferOf(vararg shorts: Short): ShortBuffer {
+    val count = shorts.size
+    val shortBuffer = ByteBuffer.allocateDirect(count * Short.BYTES).order(ByteOrder.nativeOrder()).asShortBuffer()
+    for (i in 0 until count)
+        shortBuffer.put(i, shorts[i])
+    return shortBuffer
+}
 
-fun byteBufferBig(size: Int): ByteBuffer = GLBuffers.newDirectByteBuffer(size)
-fun shortBufferBig(size: Int): ShortBuffer = GLBuffers.newDirectShortBuffer(size)
-fun intBufferBig(size: Int): IntBuffer = GLBuffers.newDirectIntBuffer(size)
-fun longBufferBig(size: Int): LongBuffer = GLBuffers.newDirectLongBuffer(size)
+fun shortBufferOf(vararg elements: Number): ShortBuffer {
+    val count = elements.size
+    val shortBuffer = ByteBuffer.allocateDirect(count * Short.BYTES).order(ByteOrder.nativeOrder()).asShortBuffer()
+    for (i in 0 until count)
+        shortBuffer.put(i, elements[i].s)
+    return shortBuffer
+}
+
+fun intBufferOf(vararg ints: Int): IntBuffer {
+    val count = ints.size
+    val intBuffer = ByteBuffer.allocateDirect(count * Int.BYTES).order(ByteOrder.nativeOrder()).asIntBuffer()
+    for (i in 0 until count)
+        intBuffer.put(i, ints[i])
+    return intBuffer
+}
+
+fun intBufferOf(vararg elements: Number): IntBuffer {
+    val count = elements.size
+    val intBuffer = ByteBuffer.allocateDirect(count * Int.BYTES).order(ByteOrder.nativeOrder()).asIntBuffer()
+    for (i in 0 until count)
+        intBuffer.put(i, elements[i].i)
+    return intBuffer
+}
+
+fun longBufferOf(vararg longs: Long): LongBuffer {
+    val count = longs.size
+    val longBuffer = ByteBuffer.allocateDirect(count * Long.BYTES).order(ByteOrder.nativeOrder()).asLongBuffer()
+    for (i in 0 until count)
+        longBuffer.put(i, longs[i])
+    return longBuffer
+}
+
+fun longBufferOf(vararg elements: Number): LongBuffer {
+    val count = elements.size
+    val longBuffer = ByteBuffer.allocateDirect(count * Long.BYTES).order(ByteOrder.nativeOrder()).asLongBuffer()
+    for (i in 0 until count)
+        longBuffer.put(i, elements[i].L)
+    return longBuffer
+}
+
+fun floatBufferBig(size: Int): FloatBuffer = ByteBuffer.allocateDirect(size * Float.BYTES).order(ByteOrder.nativeOrder()).asFloatBuffer()
+fun doubleBufferBig(size: Int): DoubleBuffer = ByteBuffer.allocateDirect(size * Double.BYTES).order(ByteOrder.nativeOrder()).asDoubleBuffer()
+
+fun byteBufferBig(size: Int): ByteBuffer = ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder())
+fun shortBufferBig(size: Int): ShortBuffer = ByteBuffer.allocateDirect(size * Short.BYTES).order(ByteOrder.nativeOrder()).asShortBuffer()
+fun intBufferBig(size: Int): IntBuffer = ByteBuffer.allocateDirect(size * Int.BYTES).order(ByteOrder.nativeOrder()).asIntBuffer()
+fun longBufferBig(size: Int): LongBuffer = ByteBuffer.allocateDirect(size * Long.BYTES).order(ByteOrder.nativeOrder()).asLongBuffer()
 
 
 // i.e: clear color buffer

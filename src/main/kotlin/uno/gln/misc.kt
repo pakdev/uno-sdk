@@ -1,13 +1,9 @@
 package uno.gln
 
-import glm.set
-import glm.vec2.Vec2i
-import glm.vec4.Vec4
-import org.lwjgl.opengl.GL11
-import org.lwjgl.opengl.GL11.glViewport
-import org.lwjgl.opengl.GL30.glBlitFramebuffer
-import org.lwjgl.opengl.GL30.glClearBufferfv
-import org.lwjgl.opengl.GL41
+import android.opengl.GLES20
+import glm_.set
+import glm_.vec2.Vec2i
+import glm_.vec4.Vec4
 import uno.buffer.doubleBufferBig
 import uno.buffer.floatBufferBig
 import uno.buffer.intBufferBig
@@ -17,26 +13,26 @@ import uno.buffer.intBufferBig
  */
 
 
-fun glClearBuffer(buffer: Int, value: Float) = glClearBuffer(buffer, 0, value)
+//fun glClearBuffer(buffer: Int, value: Float) = glClearBuffer(buffer, 0, value)
+//
+//fun glClearBuffer(buffer: Int, drawbuffer: Int, value: Float) {
+//    floatBuffer[0] = value
+//    glClearBufferfv(buffer, drawbuffer, floatBuffer)
+//}
+//
+//fun glClearBuffer(buffer: Int, value: Vec4) = glClearBuffer(buffer, 0, value)
+//fun glClearBuffer(buffer: Int, drawbuffer: Int, value: Vec4) = glClearBufferfv(buffer, drawbuffer, value to mat4Buffer)
 
-fun glClearBuffer(buffer: Int, drawbuffer: Int, value: Float) {
-    floatBuffer[0] = value
-    glClearBufferfv(buffer, drawbuffer, floatBuffer)
-}
+fun glViewport(size: Vec2i) = GLES20.glViewport(0, 0, size.x, size.y)
 
-fun glClearBuffer(buffer: Int, value: Vec4) = glClearBuffer(buffer, 0, value)
-fun glClearBuffer(buffer: Int, drawbuffer: Int, value: Vec4) = glClearBufferfv(buffer, drawbuffer, value to mat4Buffer)
-
-fun glViewport(size: Vec2i) = glViewport(0, 0, size.x, size.y)
-
-fun glBlitFramebuffer(size: Vec2i) = glBlitFramebuffer(
-        0, 0, size.x, size.y,
-        0, 0, size.x, size.y,
-        GL11.GL_COLOR_BUFFER_BIT, GL11.GL_LINEAR)
+//fun glBlitFramebuffer(size: Vec2i) = glBlitFramebuffer(
+//        0, 0, size.x, size.y,
+//        0, 0, size.x, size.y,
+//        GL11.GL_COLOR_BUFFER_BIT, GL11.GL_LINEAR)
 
 
-fun glClearColor() = GL11.glClearColor(0f, 0f, 0f, 1f)
-fun glClearDepthf() = GL41.glClearDepthf(1f)
+fun glClearColor() = GLES20.glClearColor(0f, 0f, 0f, 1f)
+fun glClearDepthf() = GLES20.glClearDepthf(1f)
 
 
 val floatBuffer = floatBufferBig(1)

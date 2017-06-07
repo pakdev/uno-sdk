@@ -1,8 +1,8 @@
 package uno.gln
 
+import android.opengl.GLES10.*
+import android.opengl.GLES20
 import com.jogamp.opengl.GL3
-import org.lwjgl.opengl.ARBES2Compatibility
-import org.lwjgl.opengl.GL11
 
 /**
  * Created by GBarbieri on 21.04.2017.
@@ -24,39 +24,35 @@ object ObjectDepth {
     var test = false
         set(value) {
             if (value)
-                GL11.glEnable(GL11.GL_DEPTH_TEST)
+                GLES20.glEnable(GL_DEPTH_TEST)
             else
-                GL11.glDisable(GL11.GL_DEPTH_TEST)
+                GLES20.glDisable(GL_DEPTH_TEST)
         }
     var mask = true
         set(value) {
-            GL11.glDepthMask(value)
+            GLES20.glDepthMask(value)
             field = value
         }
     var func = Func.less
         set(value) {
-            GL11.glDepthFunc(func.i)
+            GLES20.glDepthFunc(func.i)
             field = value
         }
-    var range = 0.0 .. 1.0
+
+    var range = 0f .. 1f
         set(value) {
-            GL11.glDepthRange(value.start, value.endInclusive)
-            field = value
-        }
-    var rangef = 0f .. 1f
-        set(value) {
-            ARBES2Compatibility.glDepthRangef(value.start, value.endInclusive)
+            GLES20.glDepthRangef(value.start, value.endInclusive)
             field = value
         }
     var clamp = false
         set(value) {
             if (value)
-                GL11.glEnable(GL3.GL_DEPTH_CLAMP)
+                GLES20.glEnable(GL3.GL_DEPTH_CLAMP)
             else
-                GL11.glDisable(GL3.GL_DEPTH_CLAMP)
+                GLES20.glDisable(GL3.GL_DEPTH_CLAMP)
         }
 
-    enum class Func(val i: Int) { never(GL11.GL_NEVER), less(GL11.GL_LESS), equal(GL11.GL_EQUAL), lEqual(GL11.GL_LEQUAL),
-        greater(GL11.GL_GREATER), notEqual(GL11.GL_NOTEQUAL), gEqual(GL11.GL_GEQUAL), always(GL11.GL_ALWAYS)
+    enum class Func(val i: Int) { never(GL_NEVER), less(GL_LESS), equal(GL_EQUAL), lEqual(GL_LEQUAL),
+        greater(GL_GREATER), notEqual(GL_NOTEQUAL), gEqual(GL_GEQUAL), always(GL_ALWAYS)
     }
 }

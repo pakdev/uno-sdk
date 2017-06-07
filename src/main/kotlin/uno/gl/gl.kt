@@ -1,12 +1,9 @@
 package uno.gl
 
-import com.jogamp.newt.opengl.GLWindow
-import com.jogamp.opengl.GL
-import com.jogamp.opengl.GL.*
-import com.jogamp.opengl.GL3
-import com.jogamp.opengl.GLException
-import glm.vec2.Vec2
-import org.lwjgl.opengl.GL11.glGetFloatv
+import android.opengl.GLES20
+import android.opengl.GLES20.*
+import android.opengl.GLException
+import glm_.vec2.Vec2
 import uno.buffer.byteBufferBig
 import uno.buffer.floatBufferBig
 import uno.buffer.intBufferBig
@@ -41,17 +38,9 @@ val GL_PALETTE8_R5_G6_B5_OES = 0x8B97
 val GL_PALETTE8_RGBA4_OES = 0x8B98
 val GL_PALETTE8_RGB5_A1_OES = 0x8B99
 
+fun checkError(location: String) {
 
-inline infix fun GLWindow.gl3(crossinline inject: GL3.() -> Unit) {
-    invoke(false) { glAutoDrawable ->
-        glAutoDrawable.gl.gL3.inject()
-        false
-    }
-}
-
-fun checkError(gl: GL, location: String) {
-
-    val error = gl.glGetError()
+    val error = glGetError()
     if (error != GL_NO_ERROR) {
         val errorString: String
         when (error) {
@@ -62,7 +51,7 @@ fun checkError(gl: GL, location: String) {
             GL_OUT_OF_MEMORY -> errorString = "GL_OUT_OF_MEMORY"
             else -> errorString = "UNKNOWN"
         }
-        throw GLException("OpenGL Error($errorString): $location")
+        throw GLException(0, "OpenGL Error($errorString): $location")
     }
 }
 
