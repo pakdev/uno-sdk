@@ -32,7 +32,6 @@ package uno.buffer
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import com.jogamp.opengl.util.GLBuffers
 import uno.buffer.ByteBufferGuard.BufferCleaner
 import uno.buffer.MMapDirectory.newBufferCleaner
 import java.lang.invoke.MethodHandles.*
@@ -147,7 +146,7 @@ fun destroyBuffer(toBeDestroyed: Buffer) {
 
 fun main(args: Array<String>) {
 
-    val bb = GLBuffers.newDirectByteBuffer(1_000_000_000)
+    val bb = ByteBuffer.allocateDirect(1_000_000_000)
 
     println(bb)
 
@@ -172,7 +171,7 @@ public class BU {
     internal var CLEANER: BufferCleaner?
 
     init {
-        val hack = AccessController.doPrivileged(unmapHackImpl() as PrivilegedAction<Any>);
+        val hack = AccessController.doPrivileged(unmapHackImpl() as PrivilegedAction<*>);
         if (hack is BufferCleaner) {
             CLEANER = hack as BufferCleaner
             UNMAP_SUPPORTED = true;

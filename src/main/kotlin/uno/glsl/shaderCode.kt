@@ -1,10 +1,5 @@
 package uno.glsl
 
-import com.jogamp.opengl.GL2ES2
-import com.jogamp.opengl.GL2ES2.GL_VERTEX_SHADER
-import com.jogamp.opengl.GL3ES3.*
-import com.jogamp.opengl.util.glsl.ShaderCode
-
 /**
  * Created by GBarbieri on 21.02.2017.
  */

@@ -3,7 +3,6 @@ package uno.gln
 import android.opengl.GLES20
 import android.opengl.GLES20.GL_FRAMEBUFFER
 import android.opengl.GLES20.GL_TEXTURE_2D
-import com.jogamp.opengl.GL2ES1.GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING
 import glm_.vec2.Vec2i
 import java.nio.IntBuffer
 
@@ -49,9 +48,9 @@ object Framebuffer {
     fun texture2D(target: Int, attachment: Int, texture: Int, level: Int = 0) =
             GLES20.glFramebufferTexture2D(target, attachment, GL_TEXTURE_2D, texture, level)
 
-    val Int.colorEncoding
-        get(): Int {
-            GLES20.glGetFramebufferAttachmentParameteriv(GL_FRAMEBUFFER, this, GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING, intBuffer)
-            return intBuffer[0]
-        }
+//    val Int.colorEncoding
+//        get(): Int {
+//            GLES20.glGetFramebufferAttachmentParameteriv(GL_FRAMEBUFFER, this, GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING, intBuffer)
+//            return intBuffer[0]
+//        }
 }

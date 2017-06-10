@@ -3,7 +3,6 @@ package uno.gln
 import android.opengl.GLES20
 import android.opengl.GLES20.GL_ARRAY_BUFFER
 import android.opengl.GLES20.GL_ELEMENT_ARRAY_BUFFER
-import com.jogamp.opengl.GL2ES3.GL_UNIFORM_BUFFER
 import glm_.L
 import glm_.mat4x4.Mat4
 import glm_.set
@@ -39,17 +38,17 @@ fun initElementBuffer(buffer: IntBuffer, block: Buffer.() -> Unit) {
     buffer[0] = initBuffer(GL_ELEMENT_ARRAY_BUFFER, block)
 }
 
-fun initUniformBuffer(buffer: IntBuffer, block: Buffer.() -> Unit) {
-    buffer[0] = initBuffer(GL_UNIFORM_BUFFER, block)
-}
+//fun initUniformBuffer(buffer: IntBuffer, block: Buffer.() -> Unit) {
+//    buffer[0] = initBuffer(GL_UNIFORM_BUFFER, block)
+//}
 
-fun initUniformBuffers(buffers: IntBuffer, block: Buffers.() -> Unit) {
-    Buffers.target = GL_UNIFORM_BUFFER
-    GLES20.glGenBuffers(buffers.capacity(), buffers)
-    Buffers.buffers = buffers
-    Buffers.block()
-    GLES20.glBindBuffer(GL_UNIFORM_BUFFER, 0)
-}
+//fun initUniformBuffers(buffers: IntBuffer, block: Buffers.() -> Unit) {
+//    Buffers.target = GL_UNIFORM_BUFFER
+//    GLES20.glGenBuffers(buffers.capacity(), buffers)
+//    Buffers.buffers = buffers
+//    Buffers.block()
+//    GLES20.glBindBuffer(GL_UNIFORM_BUFFER, 0)
+//}
 
 fun initBuffers(buffers: IntBuffer, block: Buffers.() -> Unit) {
     GLES20.glGenBuffers(buffers.capacity(), buffers)
@@ -79,8 +78,8 @@ fun withArrayBuffer(buffer: IntBuffer, block: Buffer.() -> Unit) = withBuffer(GL
 fun withArrayBuffer(buffer: Int, block: Buffer.() -> Unit) = withBuffer(GL_ARRAY_BUFFER, buffer, block)
 fun withElementBuffer(buffer: IntBuffer, block: Buffer.() -> Unit) = withBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer[0], block)
 fun withElementBuffer(buffer: Int, block: Buffer.() -> Unit) = withBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer, block)
-fun withUniformBuffer(buffer: IntBuffer, block: Buffer.() -> Unit) = withBuffer(GL_UNIFORM_BUFFER, buffer[0], block)
-fun withUniformBuffer(buffer: Int, block: Buffer.() -> Unit) = withBuffer(GL_UNIFORM_BUFFER, buffer, block)
+//fun withUniformBuffer(buffer: IntBuffer, block: Buffer.() -> Unit) = withBuffer(GL_UNIFORM_BUFFER, buffer[0], block)
+//fun withUniformBuffer(buffer: Int, block: Buffer.() -> Unit) = withBuffer(GL_UNIFORM_BUFFER, buffer, block)
 
 object Buffer {
 
@@ -196,10 +195,10 @@ object Buffers {
         GLES20.glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)
     }
 
-    fun withUniformAt(bufferIndex: Int, block: Buffer.() -> Unit) {
-        Buffer.target = GL_UNIFORM_BUFFER
-        Buffer.name = buffers[bufferIndex] // bind
-        Buffer.block()
-        GLES20.glBindBuffer(GL_UNIFORM_BUFFER, 0)
-    }
+//    fun withUniformAt(bufferIndex: Int, block: Buffer.() -> Unit) {
+//        Buffer.target = GL_UNIFORM_BUFFER
+//        Buffer.name = buffers[bufferIndex] // bind
+//        Buffer.block()
+//        GLES20.glBindBuffer(GL_UNIFORM_BUFFER, 0)
+//    }
 }

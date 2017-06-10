@@ -3,10 +3,9 @@ package uno.gln
 import android.opengl.GLES10.GL_TEXTURE_2D
 import android.opengl.GLES20
 import android.opengl.GLES20.GL_TEXTURE_CUBE_MAP_POSITIVE_X
-import com.jogamp.opengl.GL2GL3.GL_TEXTURE_1D
-import gli.Texture2d
-import gli.TextureCube
-import gli.gl
+//import gli.Texture2d
+//import gli.TextureCube
+//import gli.gl
 import glm_.vec1.Vec1i
 import glm_.vec2.Vec2i
 import glm_.vec3.Vec3i
@@ -105,38 +104,38 @@ fun glTexImage2D(target:Int, level:Int, internalFormat:Int, size: Vec2i, format:
         GLES20.glTexImage2D(target, level, internalFormat, size.x, size.y, 0, format, type, pixels)
 
 
-fun glTexImage2D(texture: gli.Texture) {
-    val format = gli.gl.translate(texture.format, texture.swizzles)
-    return glTexImage2D(0, format, texture)
-}
-
-fun glTexImage2D(format: gl.Format, texture: gli.Texture) = glTexImage2D(0, format, texture)
-fun glTexImage2D(level: Int, format: gl.Format, texture: gli.Texture) =
-        GLES20.glTexImage2D(
-                GL_TEXTURE_2D,
-                level,
-                format.internal.i,
-                texture.extent().x, texture.extent().y,
-                0,
-                format.external.i, format.type.i,
-                texture.data())
-
-
-fun glTexImage2D(texture: gli.Texture2d) {
-    val format = gli.gl.translate(texture.format, texture.swizzles)
-    return glTexImage2D(0, format, texture)
-}
-
-fun glTexImage2D(format: gl.Format, texture: gli.Texture2d) = glTexImage2D(0, format, texture)
-fun glTexImage2D(level: Int, format: gl.Format, texture: Texture2d) =
-        GLES20.glTexImage2D(
-                GL_TEXTURE_2D,
-                level,
-                format.internal.i,
-                texture[level].extent().x, texture[level].extent().y,
-                0,
-                format.external.i, format.type.i,
-                texture[level].data())
+//fun glTexImage2D(texture: gli.Texture) {
+//    val format = gli.gl.translate(texture.format, texture.swizzles)
+//    return glTexImage2D(0, format, texture)
+//}
+//
+//fun glTexImage2D(format: gl.Format, texture: gli.Texture) = glTexImage2D(0, format, texture)
+//fun glTexImage2D(level: Int, format: gl.Format, texture: gli.Texture) =
+//        GLES20.glTexImage2D(
+//                GL_TEXTURE_2D,
+//                level,
+//                format.internal.i,
+//                texture.extent().x, texture.extent().y,
+//                0,
+//                format.external.i, format.type.i,
+//                texture.data())
+//
+//
+//fun glTexImage2D(texture: gli.Texture2d) {
+//    val format = gli.gl.translate(texture.format, texture.swizzles)
+//    return glTexImage2D(0, format, texture)
+//}
+//
+//fun glTexImage2D(format: gl.Format, texture: gli.Texture2d) = glTexImage2D(0, format, texture)
+//fun glTexImage2D(level: Int, format: gl.Format, texture: Texture2d) =
+//        GLES20.glTexImage2D(
+//                GL_TEXTURE_2D,
+//                level,
+//                format.internal.i,
+//                texture[level].extent().x, texture[level].extent().y,
+//                0,
+//                format.external.i, format.type.i,
+//                texture[level].data())
 
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -208,35 +207,35 @@ fun glTexImage2D(level: Int, format: gl.Format, texture: Texture2d) =
 // ---------------------------------------------------------------------------------------------------------------------
 
 
-fun glTexImageCube(face: Int, texture: gli.Texture) {
-    val format = gli.gl.translate(texture.format, texture.swizzles)
-    return glTexImageCube(face, 0, format, texture)
-}
-
-fun glTexImageCube(face: Int, format: gl.Format, texture: gli.Texture) = glTexImageCube(face, 0, format, texture)
-fun glTexImageCube(face: Int, level: Int, format: gl.Format, texture: gli.Texture) =
-        GLES20.glTexImage2D(
-                GL_TEXTURE_CUBE_MAP_POSITIVE_X + face,
-                level,
-                format.internal.i,
-                texture.extent().x, texture.extent().y,
-                0,
-                format.external.i, format.type.i,
-                texture.data(0, face, level))
-
-
-fun glTexImageCube(face: Int, texture: gli.TextureCube) {
-    val format = gli.gl.translate(texture.format, texture.swizzles)
-    return glTexImageCube(face, 0, format, texture)
-}
-
-fun glTexImageCube(face: Int, format: gl.Format, texture: TextureCube) = glTexImageCube(face, 0, format, texture)
-fun glTexImageCube(face: Int, level: Int, format: gl.Format, texture: TextureCube) =
-        GLES20.glTexImage2D(
-                GL_TEXTURE_CUBE_MAP_POSITIVE_X + face,
-                level,
-                format.internal.i,
-                texture.extent().x, texture.extent().y,
-                0,
-                format.external.i, format.type.i,
-                texture[face].data())
+//fun glTexImageCube(face: Int, texture: gli.Texture) {
+//    val format = gli.gl.translate(texture.format, texture.swizzles)
+//    return glTexImageCube(face, 0, format, texture)
+//}
+//
+//fun glTexImageCube(face: Int, format: gl.Format, texture: gli.Texture) = glTexImageCube(face, 0, format, texture)
+//fun glTexImageCube(face: Int, level: Int, format: gl.Format, texture: gli.Texture) =
+//        GLES20.glTexImage2D(
+//                GL_TEXTURE_CUBE_MAP_POSITIVE_X + face,
+//                level,
+//                format.internal.i,
+//                texture.extent().x, texture.extent().y,
+//                0,
+//                format.external.i, format.type.i,
+//                texture.data(0, face, level))
+//
+//
+//fun glTexImageCube(face: Int, texture: gli.TextureCube) {
+//    val format = gli.gl.translate(texture.format, texture.swizzles)
+//    return glTexImageCube(face, 0, format, texture)
+//}
+//
+//fun glTexImageCube(face: Int, format: gl.Format, texture: TextureCube) = glTexImageCube(face, 0, format, texture)
+//fun glTexImageCube(face: Int, level: Int, format: gl.Format, texture: TextureCube) =
+//        GLES20.glTexImage2D(
+//                GL_TEXTURE_CUBE_MAP_POSITIVE_X + face,
+//                level,
+//                format.internal.i,
+//                texture.extent().x, texture.extent().y,
+//                0,
+//                format.external.i, format.type.i,
+//                texture[face].data())

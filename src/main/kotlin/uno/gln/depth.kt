@@ -2,7 +2,6 @@ package uno.gln
 
 import android.opengl.GLES10.*
 import android.opengl.GLES20
-import com.jogamp.opengl.GL3
 
 /**
  * Created by GBarbieri on 21.04.2017.
@@ -44,13 +43,13 @@ object ObjectDepth {
             GLES20.glDepthRangef(value.start, value.endInclusive)
             field = value
         }
-    var clamp = false
-        set(value) {
-            if (value)
-                GLES20.glEnable(GL3.GL_DEPTH_CLAMP)
-            else
-                GLES20.glDisable(GL3.GL_DEPTH_CLAMP)
-        }
+//    var clamp = false
+//        set(value) {
+//            if (value)
+//                GLES20.glEnable(GL_DEPTH_CLAMP)
+//            else
+//                GLES20.glDisable(GL_DEPTH_CLAMP)
+//        }
 
     enum class Func(val i: Int) { never(GL_NEVER), less(GL_LESS), equal(GL_EQUAL), lEqual(GL_LEQUAL),
         greater(GL_GREATER), notEqual(GL_NOTEQUAL), gEqual(GL_GEQUAL), always(GL_ALWAYS)

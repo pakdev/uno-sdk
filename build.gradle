@@ -60,8 +60,8 @@ dependencies {
 
     compileOnly group: 'com.google.android', name: 'android', version: '4.1.1.4'
 
-    compile 'com.github.kotlin-graphics:gli:1240840379a16bb49cf4e25ba077925d1905920b'
-    compile 'com.github.kotlin-graphics:glm:8a453d9c3bee1e8aa7fee48631335ad97b94d2c1'
+//    compile 'com.github.kotlin-graphics:gli:1240840379a16bb49cf4e25ba077925d1905920b'
+    compile 'com.github.kotlin-graphics:glm:2fc147ac61638c988b123a1053bf53f12c150797'
 }
 
 repositories {

@@ -3,8 +3,8 @@ package uno.gln
 import android.opengl.GLES10.*
 import android.opengl.GLES20
 import android.opengl.GLES20.GL_MIRRORED_REPEAT
-import gli.Texture2d
-import gli.gl.Format
+//import gli.Texture2d
+//import gli.gl.Format
 import glm_.set
 import glm_.vec2.Vec2i
 import java.nio.ByteBuffer
