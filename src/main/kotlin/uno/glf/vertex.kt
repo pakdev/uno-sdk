@@ -38,7 +38,7 @@ object glf {
         val size = Vec3.size + Vec4.size
         override var attribute = arrayOf(
                 VertexAttribute(semantic.attr.POSITION, Vec3.length, GL_FLOAT, false, size, 0),
-                VertexAttribute(semantic.attr.COLOR, Vec4.length, GL_FLOAT, false, size, Vec4.size.L))
+                VertexAttribute(semantic.attr.COLOR, Vec4.length, GL_FLOAT, false, size, Vec3.size.L))
     }
 
     object pos4_col4 : VertexLayout {
