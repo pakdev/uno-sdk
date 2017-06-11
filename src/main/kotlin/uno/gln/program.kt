@@ -7,8 +7,6 @@ import glm_.mat4x4.Mat4
 import glm_.vec2.Vec2
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
-import uno.buffer.byteBufferOf
-import uno.buffer.destroy
 import uno.glsl.Program
 
 fun glCreatePrograms(ints: IntArray) = repeat(ints.size) { ints[it] = GLES20.glCreateProgram() }
@@ -138,7 +136,13 @@ fun glDeleteProgram(program: Program) = GLES20.glDeleteProgram(program.name)
 fun glDeletePrograms(vararg programs: Program) = programs.forEach { GLES20.glDeleteProgram(it.name) }
 
 
+// TODO -> master
 fun glGetShader(shader: Int, pname: Int): Int {
     GLES20.glGetShaderiv(shader, pname, intBuffer)
+    return intBuffer[0]
+}
+
+fun glGetProgram(program: Int, pname: Int): Int {
+    GLES20.glGetProgramiv(program, pname, intBuffer)
     return intBuffer[0]
 }
