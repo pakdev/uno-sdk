@@ -56,7 +56,7 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
-    testCompile("io.kotlintest:kotlintest:2.0.0")
+//    testCompile("io.kotlintest:kotlintest:2.0.0")
 
     compileOnly group: 'com.google.android', name: 'android', version: '4.1.1.4'
 
