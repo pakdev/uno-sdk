@@ -34,6 +34,14 @@ fun initArrayBuffer(buffer: IntBuffer, block: Buffer.() -> Unit) {
     buffer[0] = initBuffer(GL_ARRAY_BUFFER, block)
 }
 
+fun initArrayBuffers(buffers: IntBuffer, block: Buffers.() -> Unit) {
+    Buffers.target = GL_ARRAY_BUFFER
+    GLES20.glGenBuffers(buffers.capacity(), buffers)
+    Buffers.buffers = buffers
+    Buffers.block()
+    GLES20.glBindBuffer(GL_ARRAY_BUFFER, 0)
+}
+
 fun initElementBuffer(buffer: IntBuffer, block: Buffer.() -> Unit) {
     buffer[0] = initBuffer(GL_ELEMENT_ARRAY_BUFFER, block)
 }
