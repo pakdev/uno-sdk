@@ -62,25 +62,25 @@ object ProgramUse {
 
 
     fun link() = GLES20.glLinkProgram(name)
-    
-    infix fun Int.to(location: Int) = GLES20.glUniform1i(location, this)    
+
+    infix fun Int.to(location: Int) = GLES20.glUniform1i(location, this)
     infix fun Float.to(location: Int) = GLES20.glUniform1f(location, this)
-    
+
     infix fun Vec2.to(location: Int) = GLES20.glUniform2fv(location, 1, this to vec2Buffer)
     infix fun Vec3.to(location: Int) = GLES20.glUniform3fv(location, 1, this to vec3Buffer)
     infix fun Vec4.to(location: Int) = GLES20.glUniform4fv(location, 1, this to vec4Buffer)
-    
+
     infix fun Mat2.to(location: Int) = GLES20.glUniformMatrix2fv(location, 1, false, this to mat2Buffer)
     infix fun Mat3.to(location: Int) = GLES20.glUniformMatrix3fv(location, 1, false, this to mat3Buffer)
     infix fun Mat4.to(location: Int) = GLES20.glUniformMatrix4fv(location, 1, false, this to mat4Buffer)
-    
-    infix fun Int.to(uniform: String) = GLES20.glUniform1i(uniform.location, this)    
+
+    infix fun Int.to(uniform: String) = GLES20.glUniform1i(uniform.location, this)
     infix fun Float.to(uniform: String) = GLES20.glUniform1f(uniform.location, this)
-    
+
     infix fun Vec2.to(uniform: String) = GLES20.glUniform2fv(uniform.location, 1, this to vec2Buffer)
     infix fun Vec3.to(uniform: String) = GLES20.glUniform3fv(uniform.location, 1, this to vec3Buffer)
     infix fun Vec4.to(uniform: String) = GLES20.glUniform4fv(uniform.location, 1, this to vec4Buffer)
-    
+
     infix fun Mat2.to(uniform: String) = GLES20.glUniformMatrix2fv(uniform.location, 1, false, this to mat2Buffer)
     infix fun Mat3.to(uniform: String) = GLES20.glUniformMatrix3fv(uniform.location, 1, false, this to mat3Buffer)
     infix fun Mat4.to(uniform: String) = GLES20.glUniformMatrix4fv(uniform.location, 1, false, this to mat4Buffer)
@@ -136,3 +136,9 @@ fun glUseProgram() = GLES20.glUseProgram(0)
 fun glDeletePrograms(programs: IntArray) = programs.forEach { GLES20.glDeleteProgram(it) }
 fun glDeleteProgram(program: Program) = GLES20.glDeleteProgram(program.name)
 fun glDeletePrograms(vararg programs: Program) = programs.forEach { GLES20.glDeleteProgram(it.name) }
+
+
+fun glGetShader(shader: Int, pname: Int): Int {
+    GLES20.glGetShaderiv(shader, pname, intBuffer)
+    return intBuffer[0]
+}
