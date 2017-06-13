@@ -1,5 +1,10 @@
 package uno.glsl
 
+import android.opengl.GLES20
+import android.opengl.GLES20.*
+import uno.gln.glGetProgram
+import uno.gln.glGetShader
+
 /**
  * Created by GBarbieri on 24.01.2017.
  */
@@ -10,7 +15,7 @@ package uno.glsl
  */
 open class Program {
 
-    @JvmField val name = 0
+    @JvmField val name: Int
     val uniforms = HashMap<String, Int>()
 
 //    constructor(gl: GL3, shadersRoot: String, shadersSrc: String) : this(gl, shadersRoot, shadersSrc, shadersSrc)
@@ -137,7 +142,7 @@ open class Program {
 
     // for Learn OpenGL
 
-//    constructor(context: Class<*>, vararg strings: String) {
+    //    constructor(context: Class<*>, vararg strings: String) {
 //
 //        name = GL20.glCreateProgram()
 //
@@ -181,38 +186,26 @@ open class Program {
 //        }
 //    }
 //
-//    constructor(vararg strings: String) {
-//
-//        name = GL20.glCreateProgram()
-//
-//        val root =
-//                if (strings[0].isShader())
-//                    ""
-//                else {
-//                    var r = strings[0]
-//                    if(!r.endsWith('/'))
-//                        r = "$r/"
-//                    r
-//                }
-//
-//        val (shaders, uniforms) = strings.drop(if (root.isEmpty()) 0 else 1).partition { it.isShader() }
-//
-//        val shaderNames = shaders.map { createShader(root + it) }.onEach { GL20.glAttachShader(name, it) }
-//
-//        GL20.glLinkProgram(name)
-//
-//        val status = GL20.glGetProgrami(name, GL_LINK_STATUS)
-//        if (status == GL2ES2.GL_FALSE) {
-//
-//            val strInfoLog = GL20.glGetProgramInfoLog(name)
-//
-//            System.err.println("Linker failure: $strInfoLog")
-//        }
-//
-//        shaderNames.forEach {
-//            GL20.glDetachShader(name, it)
-//            GL20.glDeleteShader(it)
-//        }
+    constructor(vertexSrc: String, fragmentSrc: String) {
+
+        name = GLES20.glCreateProgram()
+
+        val vertex = createShader(vertexSrc, GL_VERTEX_SHADER)
+        val fragment = createShader(fragmentSrc, GL_FRAGMENT_SHADER)
+
+        GLES20.glLinkProgram(name)
+
+        if (glGetProgram(name, GL_LINK_STATUS) == GL_FALSE) {
+
+            val strInfoLog = GLES20.glGetProgramInfoLog(name)
+
+            System.err.println("Linker failure: $strInfoLog")
+        }
+
+        GLES20.glDetachShader(name, vertex)
+        GLES20.glDetachShader(name, fragment)
+        GLES20.glDeleteShader(vertex)
+        GLES20.glDeleteShader(fragment)
 //
 //        uniforms.forEach {
 //            val i = GL20.glGetUniformLocation(name, it)
@@ -221,8 +214,9 @@ open class Program {
 //            else
 //                println("unable to find '$it' uniform location!")
 //        }
-//    }
-//
+    }
+
+    //
 //    operator fun get(s: String): Int = uniforms[s]!!
 //
 //    internal fun String.isShader() = contains(".vert") || contains(".tesc") || contains(".tese") || contains(".geom") || contains(".frag") || contains(".comp")
@@ -266,36 +260,24 @@ open class Program {
 //        return File(url.toURI()).readText() + "\n"
 //    }
 //
-//    fun createShader(path: String): Int {
-//
-//        val shader = GL20.glCreateShader(path.type)
-//
-//        val url = ClassLoader.getSystemResource(path)
-//        val lines = File(url.toURI()).readLines()
-//
-//        var source = ""
-//        lines.forEach {
-//            if (it.startsWith("#include "))
-//                source += parseInclude(path.substringBeforeLast('/'), it.substring("#include ".length).trim())
-//            else
-//                source += it
-//            source += '\n'
-//        }
-//
-//        GL20.glShaderSource(shader, source)
-//
-//        GL20.glCompileShader(shader)
-//
-//        val status = GL20.glGetShaderi(shader, GL_COMPILE_STATUS)
-//        if (status == GL_FALSE) {
-//
-//            val strInfoLog = GL20.glGetShaderInfoLog(shader)
-//
-//            System.err.println("Compiler failure in ${path.substringAfterLast('/')} shader: $strInfoLog")
-//        }
-//
-//        return shader
-//    }
+    fun createShader(src: String, type: Int): Int {
+
+        val shader = GLES20.glCreateShader(type)
+
+        GLES20.glShaderSource(shader, src)
+
+        GLES20.glCompileShader(shader)
+
+        if (glGetShader(shader, GL_COMPILE_STATUS) == GL_FALSE) {
+
+            val strInfoLog = GLES20.glGetShaderInfoLog(shader)
+
+            val strType = if (type == GL_VERTEX_SHADER) "vertex" else "fragment"
+            System.err.println("Compiler failure in $strType shader: $strInfoLog")
+        }
+
+        return shader
+    }
 //
 //    fun parseInclude(root: String, shader: String): String {
 //        if (shader.startsWith('"') && shader.endsWith('"'))
