@@ -186,12 +186,14 @@ open class Program {
 //        }
 //    }
 //
-    constructor(vertexSrc: String, fragmentSrc: String) {
+    constructor(vertexSrc: String, fragmentSrc: String, vararg attrs: Pair<String, Int>) {
 
         name = GLES20.glCreateProgram()
 
         val vertex = createShader(vertexSrc, GL_VERTEX_SHADER)
         val fragment = createShader(fragmentSrc, GL_FRAGMENT_SHADER)
+
+        attrs.forEach { GLES20.glBindAttribLocation(name, it.second, it.first) }
 
         GLES20.glLinkProgram(name)
 
