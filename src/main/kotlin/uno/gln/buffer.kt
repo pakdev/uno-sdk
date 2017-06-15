@@ -13,7 +13,9 @@ import java.nio.*
  * Created by elect on 18/04/17.
  */
 
+fun glGenBuffers(buffers: IntBuffer) = GLES20.glGenBuffers(buffers.capacity(), buffers)
 
+fun glBufferData(target: Int, buffer: FloatBuffer, usage: Int) = GLES20.glBufferData(target, buffer.size, buffer, usage);
 fun glBufferData(target: Int, size: Int, usage: Int) = GLES20.glBufferData(target, size, null, usage);
 
 // ----- Mat4 -----
