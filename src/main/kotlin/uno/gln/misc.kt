@@ -23,6 +23,7 @@ import uno.buffer.intBufferBig
 //fun glClearBuffer(buffer: Int, value: Vec4) = glClearBuffer(buffer, 0, value)
 //fun glClearBuffer(buffer: Int, drawbuffer: Int, value: Vec4) = glClearBufferfv(buffer, drawbuffer, value to mat4Buffer)
 
+fun glViewport(width: Int, height: Int) = GLES20.glViewport(0, 0, width, height)
 fun glViewport(size: Vec2i) = GLES20.glViewport(0, 0, size.x, size.y)
 
 //fun glBlitFramebuffer(size: Vec2i) = glBlitFramebuffer(
