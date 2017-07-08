@@ -4,6 +4,7 @@ import android.opengl.GLES20
 import glm_.f
 import glm_.set
 import glm_.vec2.Vec2i
+import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import uno.buffer.doubleBufferBig
 import uno.buffer.floatBufferBig
@@ -25,6 +26,7 @@ import uno.buffer.intBufferBig
 //fun glClearBuffer(buffer: Int, drawbuffer: Int, value: Vec4) = glClearBufferfv(buffer, drawbuffer, value to mat4Buffer)
 
 fun glViewport(width: Int, height: Int) = GLES20.glViewport(0, 0, width, height)
+
 fun glViewport(size: Vec2i) = GLES20.glViewport(0, 0, size.x, size.y)
 
 //fun glBlitFramebuffer(size: Vec2i) = glBlitFramebuffer(
@@ -65,3 +67,7 @@ val mat3x4dBuffer = doubleBufferBig(3 * 4)
 val mat4x2dBuffer = doubleBufferBig(4 * 2)
 val mat4x3dBuffer = doubleBufferBig(4 * 3)
 val mat4dBuffer = doubleBufferBig(4 * 4)
+
+
+fun glVertexAttrib3(indx: Int, vec: Vec3) = GLES20.glVertexAttrib3f(indx, vec.x, vec.y, vec.z)
+fun glVertexAttrib3(indx: Int, vec: Vec4) = GLES20.glVertexAttrib3f(indx, vec.x, vec.y, vec.z)
