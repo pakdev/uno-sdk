@@ -1,6 +1,7 @@
 package uno.gln
 
 import android.opengl.GLES20
+import glm_.f
 import glm_.set
 import glm_.vec2.Vec2i
 import glm_.vec4.Vec4
@@ -33,6 +34,8 @@ fun glViewport(size: Vec2i) = GLES20.glViewport(0, 0, size.x, size.y)
 
 
 fun glClearColor() = GLES20.glClearColor(0f, 0f, 0f, 1f)
+fun glClearColor(float: Float) = GLES20.glClearColor(float, float, float, float)
+fun glClearColor(number: Number) = GLES20.glClearColor(number.f, number.f, number.f, number.f)
 fun glClearDepthf() = GLES20.glClearDepthf(1f)
 
 

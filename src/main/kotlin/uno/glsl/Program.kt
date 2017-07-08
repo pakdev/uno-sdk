@@ -2,6 +2,7 @@ package uno.glsl
 
 import android.opengl.GLES20
 import android.opengl.GLES20.*
+import android.util.Log
 import uno.gln.glGetProgram
 import uno.gln.glGetShader
 
@@ -204,7 +205,7 @@ open class Program {
 
             val strInfoLog = GLES20.glGetProgramInfoLog(name)
 
-            System.err.println("Linker failure: $strInfoLog")
+            Log.e("App", "Linker failure: $strInfoLog")
         }
 
         GLES20.glDetachShader(name, vertex)
@@ -278,7 +279,7 @@ open class Program {
             val strInfoLog = GLES20.glGetShaderInfoLog(shader)
 
             val strType = if (type == GL_VERTEX_SHADER) "vertex" else "fragment"
-            System.err.println("Compiler failure in $strType shader: $strInfoLog")
+            Log.e("App", "Compiler failure in $strType shader: $strInfoLog")
         }
 
         return shader
