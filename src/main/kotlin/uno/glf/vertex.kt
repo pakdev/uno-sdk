@@ -113,6 +113,18 @@ object glf {
                 VertexAttribute(semantic.attr.NORMAL, Vec3.length, GL_FLOAT, false, size, Vec3.size.L),
                 VertexAttribute(semantic.attr.COLOR, Vec4.length, GL_FLOAT, false, size, Vec3.size.L * 2))
     }
+
+    object nor3 : VertexLayout {
+        val size = Vec3.size
+        override var attribute = arrayOf(
+                VertexAttribute(semantic.attr.NORMAL, Vec3.length, GL_FLOAT, false, size, 0))
+    }
+
+    object col4 : VertexLayout {
+        val size = Vec4.size
+        override var attribute = arrayOf(
+                VertexAttribute(semantic.attr.COLOR, Vec4.length, GL_FLOAT, false, size, 0))
+    }
 }
 
 
