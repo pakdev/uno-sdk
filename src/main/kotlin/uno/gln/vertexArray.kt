@@ -104,6 +104,51 @@ inline fun withVertexLayout(array: Int, format: VertexLayout, block: () -> Unit)
         GLES20.glDisableVertexAttribArray(attr.index)
 }
 
+inline fun withVertexLayouts(arrayA: Int, formatA: VertexLayout, arrayB: Int, formatB: VertexLayout, block: () -> Unit) {
+    GLES20.glBindBuffer(GL_ARRAY_BUFFER, arrayA)
+    for (attr in formatA.attribute) {
+        GLES20.glEnableVertexAttribArray(attr.index)
+        GLES20.glVertexAttribPointer(attr.index, attr.size, attr.type, attr.normalized, attr.interleavedStride, attr.pointer.i)
+    }
+    GLES20.glBindBuffer(GL_ARRAY_BUFFER, arrayB)
+    for (attr in formatB.attribute) {
+        GLES20.glEnableVertexAttribArray(attr.index)
+        GLES20.glVertexAttribPointer(attr.index, attr.size, attr.type, attr.normalized, attr.interleavedStride, attr.pointer.i)
+    }
+    GLES20.glBindBuffer(GL_ARRAY_BUFFER, 0)
+    block()
+    for (attr in formatA.attribute)
+        GLES20.glDisableVertexAttribArray(attr.index)
+    for (attr in formatB.attribute)
+        GLES20.glDisableVertexAttribArray(attr.index)
+}
+
+inline fun withVertexLayouts(arrayA: Int, formatA: VertexLayout, arrayB: Int, formatB: VertexLayout, arrayC: Int, formatC: VertexLayout, block: () -> Unit) {
+    GLES20.glBindBuffer(GL_ARRAY_BUFFER, arrayA)
+    for (attr in formatA.attribute) {
+        GLES20.glEnableVertexAttribArray(attr.index)
+        GLES20.glVertexAttribPointer(attr.index, attr.size, attr.type, attr.normalized, attr.interleavedStride, attr.pointer.i)
+    }
+    GLES20.glBindBuffer(GL_ARRAY_BUFFER, arrayB)
+    for (attr in formatB.attribute) {
+        GLES20.glEnableVertexAttribArray(attr.index)
+        GLES20.glVertexAttribPointer(attr.index, attr.size, attr.type, attr.normalized, attr.interleavedStride, attr.pointer.i)
+    }
+    GLES20.glBindBuffer(GL_ARRAY_BUFFER, arrayC)
+    for (attr in formatC.attribute) {
+        GLES20.glEnableVertexAttribArray(attr.index)
+        GLES20.glVertexAttribPointer(attr.index, attr.size, attr.type, attr.normalized, attr.interleavedStride, attr.pointer.i)
+    }
+    GLES20.glBindBuffer(GL_ARRAY_BUFFER, 0)
+    block()
+    for (attr in formatA.attribute)
+        GLES20.glDisableVertexAttribArray(attr.index)
+    for (attr in formatB.attribute)
+        GLES20.glDisableVertexAttribArray(attr.index)
+    for (attr in formatC.attribute)
+        GLES20.glDisableVertexAttribArray(attr.index)
+}
+
 
 /** For un-interleaved, that is not-interleaved */
 inline fun withVertexLayout(buffer: IntBuffer, format: VertexLayout, vararg offset: Int, block: () -> Unit) {
