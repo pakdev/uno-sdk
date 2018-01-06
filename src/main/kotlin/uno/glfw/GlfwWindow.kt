@@ -181,7 +181,7 @@ class GlfwWindow(val handle: Long) {
         }
     private val scrollListener = GLFWScrollCallbackI { _, xOffset, yOffset -> scrollCallback!!.invoke(Vec2d(xOffset, yOffset)) }
 
-    var scrollCallBack: ((Double, Double) -> Unit)? = null
+    var scrollCallback: ((Double, Double) -> Unit)? = null
         set(value) {
             if (value == null)
                 glfwSetScrollCallback(handle, null)?.free()
@@ -189,7 +189,7 @@ class GlfwWindow(val handle: Long) {
                 glfwSetScrollCallback(handle, scrollListener_)?.free()
             field = value
         }
-    private val scrollListener_ = GLFWScrollCallbackI { _, xOffset, yOffset -> scrollCallBack!!.invoke(xOffset, yOffset) }
+    private val scrollListener_ = GLFWScrollCallbackI { _, xOffset, yOffset -> scrollCallback!!.invoke(xOffset, yOffset) }
 
 
     var mouseButtonCallback: ((Int, Int, Int) -> Unit)? = null
